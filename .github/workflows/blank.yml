@@ -36,37 +36,4 @@ jobs:
         with:
           terraform_version: 1.2.5
 
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-        continue-on-error: true
-
-      - name: Terraform Init
-        id: init
-        env:
-          AWS_BUCKET_NAME: github-oidc-aws-tfstates-lk
-          AWS_BUCKET_KEY_NAME: infra.tfstate
-        run: terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=ap-south-1"
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
-        # if: github.event_name == 'pull_request'
-        continue-on-error: true
-
-      # - name: Terraform Plan Status
-      #   if: steps.plan.outcome == 'failure'
-      #   run: exit 1
-
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/test' && github.event_name == 'push'
-      #   run: terraform apply -auto-approve
-      
-      - name: some scripts
-        run: |
-          mkdir slk-test-dir
-          touch slk-test
+     
