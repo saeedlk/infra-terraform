@@ -1,4 +1,4 @@
-name: "test"
+name: Build & Deploy Packer Template
 
 on:
   workflow_dispatch:
@@ -32,9 +32,17 @@ jobs:
           role-session-name: GitHub-OIDC-TERRAFORM
 
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.2.5
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v2
+      #   with:
+      #     terraform_version: 1.2.5
 
-     
+      - name: Run Packer Container - Build & Deploy
+      # pull official hashicorp packer container for docker hub
+        uses: docker://hashicorp/packer:light
+        env: # Grab the AWS environment variables for deployment
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_GITHUB_TOKEN: ${{ secrets.AWS_GITHUB_TOKEN }}
+        with:
+          args: "build /github/workspace/templates/aws_template-intermediate.json"
