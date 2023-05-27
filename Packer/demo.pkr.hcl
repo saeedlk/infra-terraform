@@ -28,8 +28,8 @@ build {
     bucket         = "github-oidc-aws-local-tfstates-lk"
     key            = "terraform.tfstate"
     region         = "ap-southeast-1"
-    access_key     = "your-aws-access-key"
-    secret_key     = "your-aws-secret-key"
+    access_key     = ${{ secrets.AWS_ACCESS_KEY_ID }}
+    secret_key     = ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     s3_endpoint    = "s3.amazonaws.com"
     s3_force_path_style = true
 
@@ -40,7 +40,7 @@ build {
 
   // Create directories
   provisioner "shell" {
-    inline = ["sudo mkdir /opt/webapp/"]
+    inline = ["sudo mkdir /opt/webapp-lk/"]
   }
 
   post-processor "manifest" {
