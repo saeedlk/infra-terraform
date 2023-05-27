@@ -1,10 +1,10 @@
 name: Build & Deploy Packer Template
 
 on:
-  # workflow_dispatch:
-  push:
-   branches:
-     - main
+  workflow_dispatch:
+#   push:
+#    branches:
+#      - main
   # pull_request:
 
 permissions:
@@ -28,7 +28,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_ROLE }}
-          aws-region: ap-south-1
+          aws-region: ap-southeast-1
           role-session-name: GitHub-OIDC-TERRAFORM
 
 
@@ -41,7 +41,7 @@ jobs:
         id: init
         env:
           AWS_BUCKET_NAME: local-tfstate-lk
-          AWS_BUCKET_KEY_NAME: terraform.tfstate
+          AWS_BUCKET_KEY_NAME: terraform2.tfstate
           AWS_REGION: ap-southeast-1
         run: terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
 
