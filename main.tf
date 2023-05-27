@@ -29,14 +29,14 @@ resource "aws_instance" "ec2_instance" {
 
   key_name      = "singapore-ssh"
   
-  provisioner "remote-exec" {
-    command = <<EOF
+  provisioner "local-exec" {
+    command = <<EOT
       sleep 300  # Wait for instance to fully initialize
       timestamp=$(date +%Y-%m-%d_%H-%M-%S)
       image_name="myImageName_${timestamp}"
       instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=ws-tunnel-" --query "Reservations[].Instances[].InstanceId" --output text)
       aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-south-1 --description "Image created from my tunnio-infra workflow" --output json
-    EOF
+    EOT
   }
   
   tags = {
