@@ -35,5 +35,5 @@ resource "aws_instance" "ec2_instance_lk" {
 }
 
 output "instance_id" {
-  value = aws_instance.ec2_instance_lk.outputs.instances[0].instance_id
+  value = aws_instance.ec2_instance_lk.instances[0].instance_id
 }
