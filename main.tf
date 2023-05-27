@@ -29,17 +29,13 @@ resource "aws_instance" "ec2_instance" {
 
   key_name      = "singapore-ssh"
   
-  provisioner "local-exec" {
+  provisioner "remote-exec" {
     command = <<EOF
       sleep 300  # Wait for instance to fully initialize
       timestamp=$(date +%Y-%m-%d_%H-%M-%S)
       image_name="myImageName_${timestamp}"
       instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=ws-tunnel-" --query "Reservations[].Instances[].InstanceId" --output text)
       aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-south-1 --description "Image created from my tunnio-infra workflow" --output json
-
-      # AMI_ID=$(aws ec2 create-image --instance-id ${self.id} --name "my-custom-image" --description "Custom image created by Terraform" --output text)
-      # echo "ami_id=${AMI_ID}" > ami_id.txt
-      # terraform output ami_id
     EOF
   }
   
