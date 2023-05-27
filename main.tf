@@ -14,7 +14,7 @@ data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
   
-  filters {
+  filter {
       name = "name"
       value = ["amzn-ami-hvm-*-x86_64-ebs"]
   }
@@ -22,7 +22,7 @@ data "aws_ami" "amazon_linux" {
 
 resource "aws_instance" "ec2_instance" {
   # ami           = "ami-0b08bfc6ff7069aff"
-  ami           = data.aws_ami.latest_amazon_linux.id
+  ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
 #   vpc_security_group_ids = [aws_security_group.launch_wizard_lk.id]
@@ -30,7 +30,7 @@ resource "aws_instance" "ec2_instance" {
   key_name      = "singapore-ssh"
   
   provisioner "local-exec" {
-    command = <<EOT
+    command = <<EOF
       sleep 300  # Wait for instance to fully initialize
       timestamp=$(date +%Y-%m-%d_%H-%M-%S)
       image_name="myImageName_${timestamp}"
@@ -40,7 +40,7 @@ resource "aws_instance" "ec2_instance" {
       # AMI_ID=$(aws ec2 create-image --instance-id ${self.id} --name "my-custom-image" --description "Custom image created by Terraform" --output text)
       # echo "ami_id=${AMI_ID}" > ami_id.txt
       # terraform output ami_id
-    EOT
+    EOF
   }
   
   tags = {
