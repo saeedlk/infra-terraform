@@ -33,7 +33,3 @@ resource "aws_instance" "ec2_instance_lk" {
     Name = "ws-tunnel-"
   }
 }
-
-output "instance_id" {
-  value = aws_instance.ec2_instance_lk.instances[0].instance_id
-}
