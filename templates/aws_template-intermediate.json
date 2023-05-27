@@ -1,0 +1,47 @@
+{
+    "variables": {
+        "AWS_ACCESS_KEY": "{{env `AWS_ACCESS_KEY`}}",
+        "AWS_SECRET_KEY": "{{env `AWS_SECRET_KEY`}}",
+        "DESTINATION_REGIONS": "ap-southeast-1",
+        "AWS_GITHUB_TOKEN": "{{env `AWS_GITHUB_TOKEN`}}"
+    },
+    "builders": [
+        {
+            "ami_name": "packer-lk-t2.micro",
+            "force_deregister": "true",
+            "force_delete_snapshot": "true",
+            "type": "amazon-ebs",
+            "access_key": "{{user `AWS_ACCESS_KEY`}}",
+            "secret_key": "{{user `AWS_SECRET_KEY`}}",
+            "region": "ap-southeast-1",
+            "source_ami_filter": {
+               "filters": {
+                  "virtualization-type": "hvm",
+                  "name": "amzn2-ami-hvm-2.*.*-x86_64-gp2",
+                  "root-device-type": "ebs"
+               },
+               "owners": ["amazon"],
+               "most_recent": true
+            },
+
+            "instance_type": "t2.micro",
+            "ssh_username": "ec2-user",
+            "ami_regions": "{{user `DESTINATION_REGIONS`}}",
+            "user_data_file": "/github/workspace/scripts/ami_user_data.sh"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "/github/workspace/scripts/ami_user_data.sh",
+            "destination": "/home/ec2-user/ami_user_data.sh"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "echo '{{user `AWS_GITHUB_TOKEN`}}' > /home/ec2-user/token.txt",
+                "sudo mv /home/ec2-user/ami_user_data.sh /var/lib/cloud/scripts/per-instance/"
+            ]
+        }
+    ]
+}
