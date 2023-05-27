@@ -26,8 +26,6 @@ resource "aws_instance" "ec2_instance_lk" {
   instance_type = "t2.micro"
 
 #   vpc_security_group_ids = [aws_security_group.launch_wizard_lk.id]
-
-  key_name      = "singapore-ssh"  
   
   tags = {
     Name = "ws-tunnel-"
