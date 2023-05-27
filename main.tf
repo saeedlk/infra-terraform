@@ -4,7 +4,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "github-oidc-aws-local-tfstates-lk"
+    bucket = "local-tfstate-lk"
     key    = "terraform.tfstate"
     region = "ap-southeast-1"
   }
