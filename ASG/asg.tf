@@ -79,13 +79,13 @@ resource "aws_security_group" "sec_lk" {
 }
 
 
-output "ami_id" {
-  value = aws_instance.ec2_instance.ami_id
-}
+# output "ami_id" {
+#   value = aws_instance.ec2_instance.ami_id
+# }
 
-output "vpc_security_group_ids" {
-  value = aws_security_group.sec_lk.id
-}
+# output "vpc_security_group_ids" {
+#   value = aws_security_group.sec_lk.id
+# }
 
 
 # Create an Auto Scaling Group
