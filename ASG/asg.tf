@@ -2,22 +2,22 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
-terraform {
-  backend "s3" {
-    bucket = "github-oidc-aws-tfstates-lk"
-    key    = "terraform.tfstate"
-    region = "ap-southeast-1"
-  }
-}
+# terraform {
+#   backend "s3" {
+#     bucket = "local-tfstate-lk"
+#     key    = "terraform.tfstate"
+#     region = "ap-southeast-1"
+#   }
+# }
 
-data "terraform_remote_state" "tfstate_lk" {
-  backend = "s3"
-  config = {
-    bucket = "github-oidc-aws-tfstates-lk"
-    key    = "terraform.tfstate"
-    region = "ap-southeast-1"
-  }
-}
+# data "terraform_remote_state" "tfstate_lk" {
+#   backend = "s3"
+#   config = {
+#     bucket = "local-tfstate-lk"
+#     key    = "terraform.tfstate"
+#     region = "ap-southeast-1"
+#   }
+# }
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
