@@ -66,8 +66,8 @@ jobs:
       
       - name: Create Auto Scaling Group
         run: |
-          aws autoscaling create-launch-template \
-          --launch-configuration-name server-lk- \
+          aws ec2 create-launch-template \
+          --launch-template-name server-lk- \
           --instance_type t2.micro \
           --image-id $image_id
           
