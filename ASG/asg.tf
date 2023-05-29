@@ -2,13 +2,13 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
-# terraform {
-#   backend "s3" {
-#     bucket = "local-tfstate-lk"
-#     key    = "terraform.tfstate"
-#     region = "ap-southeast-1"
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket = "local-tfstate-lk"
+    key    = "terraform.tfstate"
+    region = "ap-southeast-1"
+  }
+}
 
 # data "terraform_remote_state" "tfstate_lk" {
 #   backend = "s3"
@@ -46,7 +46,7 @@ resource "aws_launch_template" "ec2_instance" {
     resource_type = "instance"
 
     tags = {
-      Name = "serverlk-"
+      Name = "serverlk-44"
     }
   }
 }
