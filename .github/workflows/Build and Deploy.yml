@@ -1,9 +1,9 @@
 name: CREATE AMI and ASG
 on:
-  # workflow_dispatch:
-  push:
-   branches:
-     - main
+  workflow_dispatch:
+  # push:
+  #  branches:
+  #    - main
   # pull_request:
 
 permissions:
@@ -58,8 +58,8 @@ jobs:
           instance_id=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text)
           aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-southeast-1 --description "Image created from my infra-terra workflow" --output json
 
-      - name: Wait for the image to become available
-        run: sleep 20
+      # - name: Wait for the image to become available
+      #   run: sleep 20
       
 #       - name: Create Auto Scaling Group
 #         run: |
