@@ -46,7 +46,7 @@ resource "aws_launch_template" "ec2_instance" {
     resource_type = "instance"
 
     tags = {
-      Name = "serverlk-1"
+      Name = "serverlk-${timestamp()}"
     }
   }
 }
