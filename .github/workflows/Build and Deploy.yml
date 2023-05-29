@@ -52,6 +52,32 @@ jobs:
           
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
+      
+      - name: Create AMI
+        id: create_image
+        run: |
+          timestamp=$(date +%Y-%m-%d_%H-%M-%S)
+          image_name="myImageName_${timestamp}"
+          instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=my-server-lk-" --query "Reservations[].Instances[].InstanceId" --output text)
+          aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-southeast-1 --description "Image created from my infra-terra workflow" --output json
+
+      - name: Wait for the image to become available
+        run: sleep 220
+      
+      - name: Create Auto Scaling Group
+        run: |
+          aws autoscaling create-launch-template \
+          --launch-configuration-name server-lk- \
+          --instance_type t2.micro \
+          --image-id $image_id
+          
+          aws autoscaling create-auto-scaling-group \
+          --auto-scaling-group-name my-asg-lk \
+          --launch-configuration-name server-lk \
+          --min-size 1 \
+          --max-size 1 \
+          --desired-capacity 1 \
+          --availability-zones ap-southeast-1a,ap-southeast-1b
 
      # - name: Run Packer Container - Build & Deploy
       # pull official hashicorp packer container for docker hub
