@@ -145,5 +145,3 @@ resource "aws_autoscaling_group" "my_asg-lk" {
 #   autoscaling_group_name = aws_autoscaling_group.my_asg-lk.name
 #   # lb_target_group_arn = aws_lb_target_group.testlk.arn
 # }
-#
-#
