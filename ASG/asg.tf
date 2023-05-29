@@ -46,7 +46,7 @@ resource "aws_launch_template" "ec2_instance" {
     resource_type = "instance"
 
     tags = {
-      Name = "serverlk-4"
+      Name = "serverlk-2"
     }
   }
 }
@@ -78,6 +78,9 @@ resource "aws_security_group" "sec_lk" {
   }
 }
 
+output "instance_id" {
+  value = aws_launch_template.ec2_instance.latest_version.arn
+}
 
 # output "ami_id" {
 #   value = aws_instance.ec2_instance.ami_id
