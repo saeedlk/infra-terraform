@@ -46,7 +46,7 @@ resource "aws_launch_template" "ec2_instance" {
     resource_type = "instance"
 
     tags = {
-      Name = "serverlk-44"
+      Name = "serverlk-4"
     }
   }
 }
@@ -89,8 +89,8 @@ resource "aws_security_group" "sec_lk" {
 
 
 # Create an Auto Scaling Group
-resource "aws_autoscaling_group" "my_asg-lk2" {
-  name                      = "asg2-lk"
+resource "aws_autoscaling_group" "my_asg-lk3" {
+  name                      = "asg3-lk"
   min_size                  = 1
   max_size                  = 1
   desired_capacity          = 1
