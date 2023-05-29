@@ -1,10 +1,10 @@
 name: Build & Deploy Packer Template
 
 on:
-#   workflow_dispatch:
-  push:
-   branches:
-     - main
+  workflow_dispatch:
+#   push:
+#    branches:
+#      - main
   # pull_request:
 
 permissions:
@@ -58,7 +58,7 @@ jobs:
         run: |
           timestamp=$(date +%Y-%m-%d_%H-%M-%S)
           image_name="myImageName_${timestamp}"
-          instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=my-server-lk-3" --query "Reservations[].Instances[].InstanceId" --output text)
+          instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=my-server-lk-" --query "Reservations[].Instances[].InstanceId" --output text)
           aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-southeast-1 --description "Image created from my infra-terra workflow" --output json
 
       - name: Wait for the image to become available
