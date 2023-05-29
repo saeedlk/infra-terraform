@@ -34,7 +34,7 @@ resource "aws_launch_template" "ec2_instance" {
   image_id = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
-#   vpc_security_group_ids = [data.terraform_remote_state.tfstate_lk.outputs.vpc_security_group_ids]
+  vpc_security_group_ids = [aws_security_group.sec_lk.id]
   # vpc_security_group_ids = [aws_security_group.launch_wizard_lk.id]
   # vpc_security_group_ids = [data.terraform_remote_state.tfstate_lk.resources.instances.?.security_group_id]
   
@@ -46,7 +46,7 @@ resource "aws_launch_template" "ec2_instance" {
     resource_type = "instance"
 
     tags = {
-      Name = "serverlk-2"
+      Name = "serverlk-1"
     }
   }
 }
