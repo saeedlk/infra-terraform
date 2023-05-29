@@ -28,6 +28,6 @@ resource "aws_instance" "ec2_instance_lk" {
 #   vpc_security_group_ids = [aws_security_group.launch_wizard_lk.id]
   
   tags = {
-    Name = "ws-tunnel-"
+    Name = "my-server-lk-"
   }
 }
