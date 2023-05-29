@@ -92,8 +92,8 @@ resource "aws_security_group" "sec_lk" {
 
 
 # Create an Auto Scaling Group
-resource "aws_autoscaling_group" "my_asg-lk3" {
-  name                      = "asg3-lk"
+resource "aws_autoscaling_group" "my_asg-lk" {
+  name                      = "asg-lk"
   min_size                  = 1
   max_size                  = 1
   desired_capacity          = 1
