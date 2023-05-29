@@ -48,6 +48,7 @@ jobs:
 
       - name: Terraform Validate and Plan
         run: |
+          terraform init
           terraform validate -no-color
           terraform plan -out=tfplan
           
