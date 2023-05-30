@@ -62,7 +62,7 @@ jobs:
       #   run: sleep 20
       
       - name: Store Image ID
-        run: echo "::set-output name=image_id::$(cat image_id.txt)"
+        run: echo "IMAGE_ID=$(cat image_id.txt)" >> $GITHUB_ENV
 
       - name: Write Image ID to File
         run: echo "${{ steps.store_image_id.outputs.image_id }}" > image_id_tf.txt

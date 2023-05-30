@@ -1,3 +1,3 @@
 variable "image_id" {
-    default = file("image_id_tf.txt")
+    default = file("${path.module}/image_id_tf.txt")
 }
