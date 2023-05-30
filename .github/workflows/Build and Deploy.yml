@@ -65,10 +65,10 @@ jobs:
 
       - name: Store Image ID
         id: store_image_id
-        run: echo "image_id=$(image_id.json)" >> $GITHUB_ENV
+        run: echo "image_id=$(cat image_id.json)" >> $GITHUB_ENV
 
       - name: Write Image ID to File
-        run: echo "${{ steps.store_image_id.outputs.image_id }}" > image_id_tf.txt
+        run: echo "${{ steps.store_image_id.outputs.image_id }}" > image_id_tf.json
 
 
     outputs:
@@ -79,8 +79,8 @@ jobs:
     needs: job1
     steps:
       - env:
-          output1: ${{ needs.job1.outputs.output1 }}
-        run: echo "$output1"
+          OUTPUT1: ${{needs.job1.outputs.output1}}
+        run: echo "$OUTPUT1"
 
       # - name: Terraform Init2
       #   id: init2
