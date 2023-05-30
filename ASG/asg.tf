@@ -19,19 +19,20 @@ terraform {
 #   }
 # }
 
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
+# data "aws_ami" "amazon_linux" {
+#   most_recent = true
+#   owners      = ["amazon"]
   
-  filter {
-      name = "name"
-      values = ["amzn-ami-hvm-*-x86_64-ebs"]
-  }
-}
+#   filter {
+#       name = "name"
+#       values = ["amzn-ami-hvm-*-x86_64-ebs"]
+#   }
+# }
 
 resource "aws_launch_template" "ec2_instance" {
   # name_prefix = "tunnel-"
-  image_id = data.aws_ami.amazon_linux.id
+  image_id = var.image_id
+  # image_id = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
   vpc_security_group_ids = [aws_security_group.sec_lk.id]
