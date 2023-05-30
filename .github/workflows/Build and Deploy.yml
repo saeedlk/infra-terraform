@@ -60,7 +60,9 @@ jobs:
 
       # - name: Wait for the image to become available
       #   run: sleep 20
-      
+      - name: Echo json
+        run: echo "image_id.json"
+
       - name: Store Image ID
         id: store_image_id
         run: echo "image_id=$(cat image_id.json)" >> $GITHUB_ENV
