@@ -65,7 +65,7 @@ jobs:
 
       - name: Store Image ID
         id: store_image_id
-        run: echo "IMAGE_ID=$(cat image_id.json)" >> $GITHUB_ENV
+        run: echo "image_id=$(image_id.json)" >> $GITHUB_ENV
 
       - name: Write Image ID to File
         run: echo "${{ steps.store_image_id.outputs.image_id }}" > image_id_tf.txt
