@@ -56,7 +56,7 @@ jobs:
           timestamp=$(date +%Y-%m-%d_%H-%M-%S)
           image_name="myImageName_${timestamp}"
           instance_id=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text)
-          aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-southeast-1 --description "Image created from my infra-terra workflow" --output json > image_id.json
+          aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-southeast-1 --description "Image created from my infra-terra workflow" --output json > image_id.txt
 
       # - name: Wait for the image to become available
       #   run: sleep 20
