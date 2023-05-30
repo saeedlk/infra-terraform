@@ -1,9 +1,9 @@
 name: CREATE AMI and ASG
 on:
-  workflow_dispatch:
-  # push:
-  #  branches:
-  #    - main
+  # workflow_dispatch:
+  push:
+   branches:
+     - main
   # pull_request:
 
 permissions:
@@ -42,7 +42,7 @@ jobs:
           AWS_BUCKET_NAME: local-tfstate-lk
           AWS_BUCKET_KEY_NAME: terraform.tfstate
           AWS_REGION: ap-southeast-1
-        working-directory: ./ASG
+        working-directory: .
         run: |
           terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
           terraform validate -no-color
@@ -56,11 +56,17 @@ jobs:
           timestamp=$(date +%Y-%m-%d_%H-%M-%S)
           image_name="myImageName_${timestamp}"
           instance_id=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].InstanceId" --output text)
-          aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-southeast-1 --description "Image created from my infra-terra workflow" --output json
+          aws ec2 create-image --instance-id $instance_id --name "${image_name}" --region ap-southeast-1 --description "Image created from my infra-terra workflow" --output text > image_id.txt
 
       # - name: Wait for the image to become available
       #   run: sleep 20
       
+      - name: Store Image ID
+        run: echo "::set-output name=image_id::$(cat image_id.txt)"
+
+      - name: Write Image ID to File
+        run: echo "${{ steps.store_image_id.outputs.image_id }}" > image_id_tf.txt
+        
 #       - name: Create Auto Scaling Group
 #         run: |
 #           aws ec2 create-launch-template \
