@@ -27,7 +27,42 @@ resource "aws_instance" "ec2_instance_lk" {
 
 #   vpc_security_group_ids = [aws_security_group.launch_wizard_lk.id]
   
+  connection {
+    type = "ssh"
+    user = "ec2-user"
+    password = ""
+    host = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "mkdir /home/ec2-user/dir1",
+      "cd ./home/ec2-user/dir1",
+      "mkdir dir2"
+    ]
+  }
+
   tags = {
     Name = "my-server-lk-"
+  }
+}
+
+resource "aws_security_group" "sec_lk" {
+  name        = "lk-sec-g"
+
+  # Inbound Rules
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Outbound Rules
+  egress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
