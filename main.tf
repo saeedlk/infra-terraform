@@ -41,7 +41,7 @@ resource "aws_instance" "ec2_instance_lk" {
     type = "ssh"
     user = "ec2-user"
     host = "${self.public_ip}"
-    private_key = "${file("/Users/slk/Downloads/singapore")}"
+    private_key = "${file("/Users/slk/Downloads/singapore-ssh")}"
   }
 
   tags = {
